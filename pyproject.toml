@@ -1,0 +1,23 @@
+[project]
+name = "desktop-agent"
+version = "1.0.0"
+description = "一个能双击打开的桌面智能体（你自己的 Cursor）"
+requires-python = ">=3.10"
+dependencies = [
+    "fastapi>=0.110.0,<1.0",
+    "uvicorn>=0.27.0,<1.0",
+    "websockets>=12.0,<15.0",
+    "openai>=1.30.0,<2.0",
+    "pywebview>=5.0,<6.0",
+    "python-dotenv>=1.0.0,<2.0",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0,<9.0"]
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = ["agent", "server"]

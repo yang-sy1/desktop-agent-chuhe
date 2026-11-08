@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Desktop Agent</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">Desktop Agent <span class="sub">你自己的 Cursor</span></div>
+    <div class="topbar-right">
+      <span id="model-badge" class="badge">未配置</span>
+      <button id="btn-settings" class="btn ghost">设置</button>
+    </div>
+  </header>
+
+  <main class="layout">
+    <!-- 左：文件资源管理器 -->
+    <aside class="panel explorer">
+      <div class="panel-title">资源管理器 <button id="btn-refresh" class="btn tiny">刷新</button></div>
+      <div id="tree" class="tree"></div>
+    </aside>
+
+    <!-- 中：对话 + 编辑器 -->
+    <section class="panel center">
+      <div class="chat">
+        <div id="messages" class="messages"></div>
+        <div class="chat-input">
+          <textarea id="task-input" placeholder="描述要它做的事，例如：mean 对空列表处理有问题，改掉，让测试通过" rows="2"></textarea>
+          <div class="chat-actions">
+            <button id="btn-run" class="btn primary">运行</button>
+            <button id="btn-interrupt" class="btn danger" disabled>中断</button>
+          </div>
+        </div>
+      </div>
+      <div class="editor">
+        <div class="editor-head">
+          <span id="editor-path" class="editor-path">未打开文件</span>
+          <button id="btn-save" class="btn tiny">保存 (Ctrl+S)</button>
+        </div>
+        <div class="editor-body">
+          <div id="gutter" class="gutter">1</div>
+          <textarea id="editor" class="editor-text" spellcheck="false" placeholder="点击左侧文件打开"></textarea>
+        </div>
+      </div>
+    </section>
+
+    <!-- 右：工具调用日志 -->
+    <aside class="panel tools">
+      <div class="panel-title">工具调用 <button id="btn-clear-log" class="btn tiny">清空</button></div>
+      <div id="tool-log" class="tool-log"></div>
+    </aside>
+  </main>
+
+  <!-- 设置弹窗 -->
+  <dialog id="settings-dialog">
+    <h3>模型设置</h3>
+    <label>Base URL <input id="cfg-base-url" type="text" placeholder="https://api.deepseek.com/v1"></label>
+    <label>API Key <input id="cfg-api-key" type="password" placeholder="sk-..."></label>
+    <label>模型 <input id="cfg-model" type="text" placeholder="deepseek-chat"></label>
+    <label class="row"><input id="cfg-persist" type="checkbox"> 持久化到 .env</label>
+    <div class="dialog-actions">
+      <button id="btn-settings-cancel" class="btn ghost">取消</button>
+      <button id="btn-settings-save" class="btn primary">保存</button>
+    </div>
+  </dialog>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

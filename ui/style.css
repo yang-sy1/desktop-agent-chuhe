@@ -1,0 +1,154 @@
+:root {
+  --bg: #0f1117;
+  --panel: #161a23;
+  --border: #262b38;
+  --text: #e6e8ee;
+  --muted: #8b91a3;
+  --accent: #4f8cff;
+  --green: #2ecc71;
+  --red: #ff5c5c;
+  --cyan: #56d4dd;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  height: 100%;
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Segoe UI", "Microsoft YaHei", system-ui, sans-serif;
+  font-size: 14px;
+}
+
+body { display: flex; flex-direction: column; }
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  height: 44px;
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+  flex-shrink: 0;
+}
+.brand { font-weight: 600; }
+.brand .sub { color: var(--muted); font-weight: 400; margin-left: 6px; }
+.topbar-right { display: flex; align-items: center; gap: 10px; }
+.badge { font-size: 12px; color: var(--muted); }
+
+.layout {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 230px 1fr 340px;
+  min-height: 0;
+}
+
+.panel {
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  background: var(--bg);
+}
+.panel:last-child { border-right: none; }
+
+.panel-title {
+  padding: 10px 12px;
+  font-weight: 600;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+  color: var(--muted);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+}
+
+/* ---------- 左：树 ---------- */
+.tree { overflow: auto; flex: 1; padding: 6px 0; font-size: 13px; }
+.tree .node { padding: 3px 12px; cursor: pointer; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.tree .node:hover { background: #1d2230; }
+.tree .node.dir { color: #9db4ff; }
+.tree .node.file { color: var(--text); padding-left: 26px; }
+.tree .node.selected { background: #253252; }
+
+/* ---------- 中：对话 + 编辑器 ---------- */
+.center { display: flex; flex-direction: column; min-height: 0; }
+.chat { display: flex; flex-direction: column; flex: 1 1 55%; min-height: 0; border-bottom: 1px solid var(--border); }
+.messages { flex: 1; overflow: auto; padding: 14px; display: flex; flex-direction: column; gap: 10px; }
+.msg { max-width: 88%; padding: 9px 12px; border-radius: 8px; line-height: 1.55; white-space: pre-wrap; word-break: break-word; }
+.msg.user { align-self: flex-end; background: var(--accent); color: #fff; }
+.msg.assistant { align-self: flex-start; background: #1d2230; }
+.msg.system { align-self: center; color: var(--muted); font-size: 12px; }
+
+.chat-input { padding: 10px; border-top: 1px solid var(--border); flex-shrink: 0; }
+.chat-input textarea {
+  width: 100%; background: var(--panel); color: var(--text);
+  border: 1px solid var(--border); border-radius: 6px; padding: 8px;
+  resize: vertical; font-family: inherit; font-size: 13px;
+}
+.chat-actions { display: flex; gap: 8px; margin-top: 8px; }
+
+.editor { flex: 1 1 45%; display: flex; flex-direction: column; min-height: 0; }
+.editor-head {
+  padding: 6px 12px; border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between; flex-shrink: 0;
+}
+.editor-path { color: var(--muted); font-size: 12px; font-family: monospace; }
+.editor-body { flex: 1; display: flex; min-height: 0; }
+.gutter {
+  width: 42px; background: var(--panel); color: var(--muted);
+  font-family: monospace; font-size: 13px; line-height: 1.5;
+  padding: 8px 6px 8px 0; text-align: right; overflow: hidden;
+  border-right: 1px solid var(--border); user-select: none;
+}
+.editor-text {
+  flex: 1; background: var(--bg); color: var(--text);
+  border: none; padding: 8px; font-family: Consolas, "Courier New", monospace;
+  font-size: 13px; line-height: 1.5; resize: none; outline: none;
+}
+
+/* ---------- 右：工具日志 ---------- */
+.tool-log { flex: 1; overflow: auto; padding: 10px; display: flex; flex-direction: column; gap: 8px; }
+.call { border: 1px solid var(--border); border-radius: 6px; overflow: hidden; }
+.call-head {
+  padding: 6px 10px; background: var(--panel); font-weight: 600;
+  display: flex; align-items: center; gap: 6px; font-size: 13px;
+}
+.call-head .tag { font-size: 10px; padding: 1px 6px; border-radius: 4px; color: #fff; background: #555; }
+.call-head .tag.mcp { background: #8a5cf6; }
+.call-head .tag.builtin { background: #3d7a5a; }
+.call-args { padding: 6px 10px; color: var(--muted); font-family: monospace; font-size: 12px; word-break: break-all; }
+.call-result { padding: 8px 10px; font-family: monospace; font-size: 12px; white-space: pre-wrap; word-break: break-word; }
+.call-result.error { color: var(--red); background: #2a1518; }
+.call-result.ok { color: var(--text); background: #141a24; }
+.call-diff { padding: 8px 10px; font-family: monospace; font-size: 12px; white-space: pre-wrap; word-break: break-word; background: #12151c; }
+.diff-add { color: var(--green); }
+.diff-del { color: var(--red); }
+.diff-hunk { color: var(--cyan); }
+
+/* ---------- 通用 ---------- */
+.btn {
+  border: 1px solid var(--border); background: var(--panel); color: var(--text);
+  padding: 6px 14px; border-radius: 6px; cursor: pointer; font-size: 13px;
+}
+.btn:hover { background: #222838; }
+.btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+.btn.danger { background: #7a1f1f; border-color: #7a1f1f; color: #fff; }
+.btn.danger:disabled { opacity: .4; cursor: default; }
+.btn.ghost { background: transparent; }
+.btn.tiny { padding: 2px 8px; font-size: 12px; }
+
+dialog { background: var(--panel); color: var(--text); border: 1px solid var(--border); border-radius: 10px; padding: 20px; width: 380px; }
+dialog h3 { margin: 0 0 14px; }
+dialog label { display: block; margin-bottom: 10px; font-size: 13px; color: var(--muted); }
+dialog input[type=text], dialog input[type=password] {
+  width: 100%; margin-top: 4px; background: var(--bg); color: var(--text);
+  border: 1px solid var(--border); border-radius: 6px; padding: 7px; font-size: 13px;
+}
+dialog .row { display: flex; align-items: center; gap: 8px; color: var(--text); }
+.dialog-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 14px; }
